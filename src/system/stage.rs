@@ -4,8 +4,8 @@ use crate::binding::{Binding, StageIdentifier};
 
 #[derive(Debug, Eq, PartialEq)]
 pub struct Stage<'a> {
-    description: Option<StageDescription>,
-    identifier: StageIdentifier,
+    pub description: Option<StageDescription>,
+    pub identifier: StageIdentifier,
     pub next_stages: HashSet<&'a Stage<'a>>,
 }
 
@@ -15,8 +15,8 @@ impl<'a> std::hash::Hash for Stage<'a> {
     }
 }
 
-impl<'a> From<&Binding> for Stage<'a> {
-    fn from(value: &Binding) -> Self {
+impl<'a> From<Binding> for Stage<'a> {
+    fn from(value: Binding) -> Self {
         Self {
             description: Some(StageDescription {
                 executor: value.executor,
@@ -35,7 +35,7 @@ impl<'a> Stage<'a> {
 }
 
 #[derive(Debug, Eq, PartialEq)]
-struct StageDescription {
+pub struct StageDescription {
     name: String,
     executor: String,
 }
